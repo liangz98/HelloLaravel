@@ -11,6 +11,19 @@
 |
 */
 
+/*
 Route::get('/', function () {
     return view('welcome');
-});
+});*/
+
+/*
+ * 基本的 HTTP 操作分别为
+ * GET 常用于页面读取
+ * POST 常用于数据提交
+ * PATCH 常用于数据更新
+ * DELETE 常用于数据删除
+ * PATCH 和 DELETE 是不被浏览器所支持的, 可以在表单中通过添加隐藏域的方式来欺骗服务器。
+ */
+Route::get('/', 'StaticPagesController@home');
+Route::get('/help', 'StaticPagesController@help');
+Route::get('/about', 'StaticPagesController@about');
