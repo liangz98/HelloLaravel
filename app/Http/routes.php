@@ -24,6 +24,9 @@ Route::get('/', function () {
  * DELETE 常用于数据删除
  * PATCH 和 DELETE 是不被浏览器所支持的, 可以在表单中通过添加隐藏域的方式来欺骗服务器。
  */
+Route::get('/default', function () {
+    return view('welcome');
+});
 Route::get('/', 'StaticPagesController@home');
 Route::get('/help', 'StaticPagesController@help');
 Route::get('/about', 'StaticPagesController@about');
