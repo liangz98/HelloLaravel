@@ -13,4 +13,9 @@ class UsersController extends Controller
     {
         return view('users.addUser');
     }
+
+    public function login()
+    {
+        return view('users.login');
+    }
 }
