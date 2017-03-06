@@ -24,17 +24,15 @@ class UsersController extends Controller
     public function show($id)
     {
         // $user = User::findOrFail($id);
-        // return view('users.userView', compact('user'));
-        return view('users.userView', ['liangz98@qq.com']);
+        $user = new User;
+        $user -> name = 'liangz98';
+        $user -> email = 'liangz98@qq.com';
+        return view('users.userView', compact('user'));
     }
 
-    public function gravatar($size = '100')
-    {
-        // $hash = md5(strtolower(trim($this->attributes['email'])));
-        $hash = md5(strtolower(trim( "liangz98@163.com" )));
-        return "https://www.gravatar.com/avatar/$hash?s=$size";
-    }
-
+    /*
+        Save
+    */
     public function store(Request $request)
     {
         $this->validate($request, [
