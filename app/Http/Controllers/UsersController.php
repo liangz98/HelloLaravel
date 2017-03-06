@@ -23,14 +23,16 @@ class UsersController extends Controller
 
     public function show($id)
     {
-        $user = User::findOrFail($id);
-        return view('users.userView', compact('user'));
+        // $user = User::findOrFail($id);
+        // return view('users.userView', compact('user'));
+        return view('users.userView', ['liangz98@qq.com']);
     }
 
     public function gravatar($size = '100')
     {
-        $hash = md5(strtolower(trim($this->attributes['email'])));
-        return "http://cn.gravatar.com/avatar/$hash?s=$size";
+        // $hash = md5(strtolower(trim($this->attributes['email'])));
+        $hash = md5(strtolower(trim( "liangz98@163.com" )));
+        return "https://www.gravatar.com/avatar/$hash?s=$size";
     }
 
     public function store(Request $request)
