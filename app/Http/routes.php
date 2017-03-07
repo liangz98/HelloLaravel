@@ -33,6 +33,8 @@ Route::get('/about', 'StaticPagesController@about')->name('about');
 Route::get('/contact', 'StaticPagesController@contact')->name('contact');
 
 Route::get('/signup', 'UsersController@addUser')->name('signup');
-Route::get('/login', 'UsersController@login')->name('login');
-
 Route::resource('user', 'UsersController');
+
+Route::get('login', 'SessionsController@create')->name('login');
+Route::post('login', 'SessionsController@store')->name('login');
+Route::delete('logout', 'SessionsController@destory')->name('logout');
