@@ -23,10 +23,10 @@ class UsersController extends Controller
 
     public function show($id)
     {
-        // $user = User::findOrFail($id);
-        $user = new User;
-        $user -> name = 'liangz98';
-        $user -> email = 'liangz98@qq.com';
+        $user = User::findOrFail($id);
+        // $user = new User;
+        // $user -> name = 'liangz98';
+        // $user -> email = 'liangz98@qq.com';
         return view('users.userView', compact('user'));
     }
 
@@ -48,6 +48,6 @@ class UsersController extends Controller
         ]);
 
         session()->flash('success', '欢迎，您将在这里开启一段新的旅程~');
-        return redirect()->route('users.userView', [$user]);
+        return redirect()->route('user.show', [$user]);
     }
 }
