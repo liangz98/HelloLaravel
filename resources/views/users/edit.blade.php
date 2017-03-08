@@ -1,4 +1,4 @@
-@include('layouts.default')
+@extends('layouts.default')
 @section('title', '更新个人资料')
 
 @section('content')
@@ -17,7 +17,7 @@
                     </a>
                 </div>
 
-                <form method="POST" action="{{ route('user.update', $user->id) }}">
+                <form method="POST" action="{{ route('user.update', $user->id )}}">
                     {{ method_field('PATCH') }}
                     {{ csrf_field() }}
 
@@ -37,8 +37,8 @@
                     </div>
 
                     <div class="form-group">
-                        <label for="password_confrimation">确认密码：</label>
-                        <input type="password" name="password_confrimation" class="form-control" value="{{ old('password_confrimation') }}">
+                        <label for="password_confirmation">确认密码：</label>
+                        <input type="password" name="password_confirmation" class="form-control" value="{{ old('password_confirmation') }}">
                     </div>
 
                     <button type="submit" class="btn btn-primary">更新</button>
