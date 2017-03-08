@@ -12,7 +12,7 @@
                             </a>
                             <ul class="dropdown-menu">
                                 <li><a href="{{ route('user.show', Auth::user()->id) }}">个人资料</a></li>
-                                <li><a href="#">设置</a></li>
+                                <li><a href="{{ route('user.edit', Auth::user()->id) }}">设置</a></li>
                                 <li class="divider"></li>
                                 <li>
                                     <a href="#" id="logout">

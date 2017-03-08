@@ -8,7 +8,8 @@ use App\Http\Requests;
 use App\Http\Controllers\Controller;
 
 use App\Models\User;
-use Illuminate\Support\Facades\Auth;
+use Auth;
+
 
 class UsersController extends Controller
 {
@@ -32,8 +33,8 @@ class UsersController extends Controller
     }
 
     /*
-        Save
-    */
+     * Save
+     */
     public function store(Request $request)
     {
         $this->validate($request, [
@@ -45,11 +46,17 @@ class UsersController extends Controller
         $user = User::create([
             'name' => $request->name,
             'email' => $request->email,
-            'password' => bcrypt($request->password)
+            'password' => bcrypt($request->password),
         ]);
 
         Auth::login($user);
         session()->flash('success', '欢迎，您将在这里开启一段新的旅程~');
         return redirect()->route('user.show', [$user]);
+    }
+
+    public function edit($id)
+    {
+        $user = User::findOrFail($id);
+        return view('users.editUser', compact('user'));
     }
 }
