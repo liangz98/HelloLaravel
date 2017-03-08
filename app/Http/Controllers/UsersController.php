@@ -120,6 +120,9 @@ class UsersController extends Controller
         return view('users.index', compact('users'));
     }
 
+    /*
+     * 删除用户
+     */
     public function destroy($id)
     {
         $user = User::findOrFail($id);
@@ -128,5 +131,11 @@ class UsersController extends Controller
 
         session()->flash('success', '成功删除用户！');
         return redirect()->back();
+    }
+
+    public function confirmEmail()
+    {
+
+        return;
     }
 }

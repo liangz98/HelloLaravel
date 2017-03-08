@@ -34,6 +34,7 @@ Route::get('/contact', 'StaticPagesController@contact')->name('contact');
 
 Route::get('/signup', 'UsersController@addUser')->name('signup');
 Route::resource('user', 'UsersController');
+Route::get('signup/confirm/{token}', 'UsersController@confirmEmail')->name('confirm_email');
 
 Route::get('login', 'SessionsController@create')->name('login');
 Route::post('login', 'SessionsController@store')->name('login');
