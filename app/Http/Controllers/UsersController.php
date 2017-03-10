@@ -9,6 +9,7 @@ use App\Http\Controllers\Controller;
 
 use App\Models\User;
 use Auth;
+use Mail;
 
 
 class UsersController extends Controller
@@ -60,9 +61,12 @@ class UsersController extends Controller
     public function store(Request $request)
     {
         $this->validate($request, [
-            'name' => 'required|max:50',
+            'name' => 'required|max:50',    // required 来验证是否为空
+            // email 邮箱格式的验证
+            // unique 唯一性验证，这里是针对于数据表 users 做验证。
+            // min 和 max 来限制所填写的最小长度和最大长度
             'email' => 'required|email|unique:users|max:255',
-            'password' => 'required|confirmed'
+            'password' => 'required|confirmed|min:4'    // confirmed 密码匹配验证
         ]);
 
         $user = User::create([
@@ -71,9 +75,15 @@ class UsersController extends Controller
             'password' => bcrypt($request->password),
         ]);
 
-        Auth::login($user);
+        // 注册成功后直接登录并中转个人页面
+        /*Auth::login($user);
         session()->flash('success', '欢迎，您将在这里开启一段新的旅程~');
-        return redirect()->route('user.show', [$user]);
+        return redirect()->route('user.show', [$user]);*/
+
+        // 注册成功后发送Email进行确认并回到首页
+        $this->sendConfirmEmailTo($user);
+        session()->flash('success', '验证邮件已发送到您的注册邮箱，请注意查收！');
+        return redirect('/');
     }
 
     /*
@@ -133,9 +143,37 @@ class UsersController extends Controller
         return redirect()->back();
     }
 
-    public function confirmEmail()
+    /*
+     * 发送Email
+     */
+    protected function sendConfirmEmailTo($user)
     {
+        $view = 'emails.confirm';
+        $data = compact('user');
+        $from = 'liangz98@qq.com';
+        $name = 'LiangZ';
+        $to = $user->email;
+        $subject = "感谢注册 SEA LAND！请确认您的邮箱！";
 
-        return;
+        Mail::send($view, $data, function ($message) use ($from, $name, $to, $subject) {
+           $message->from($from, $name)->to($to)->subject($subject);
+        });
+    }
+    
+    /*
+     * 处理Email确认
+     */
+    public function confirmEmail($token)
+    {
+        $user = User::where('activation_token', $token)->firstOrFail(); // firstOrFail 方法用来取出第一个用户,
+                                                                        // 查询不到指定用户时将返回一个 404 响应
+
+        $user -> activated = true;
+        $user -> activation_token = null;
+        $user -> save();
+
+        Auth::login($user);
+        session()->flash('success', '恭喜您，激活成功！');
+        return redirect()->route('user.show', [$user]);
     }
 }
