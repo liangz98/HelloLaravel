@@ -20,6 +20,11 @@ class PasswordController extends Controller
 
     use ResetsPasswords;
 
+    // 默认的密码重置成功后的重定向地址为 /home，
+    // 由于项目中并没有为 /home 绑定任何控制器动作，
+    // 因此对 PasswordController 的 $redirectPath 属性进行修改，将默认重定向地址改为 /
+    protected $redirectPath = '/';
+
     /**
      * Create a new password controller instance.
      *

@@ -149,6 +149,11 @@ return [
          * Laravel IDE helper
          */
         Barryvdh\LaravelIdeHelper\IdeHelperServiceProvider::class,
+
+        /*
+         * Laravel-admin
+         */
+        Encore\Admin\Providers\AdminServiceProvider::class,
     ],
 
     /*

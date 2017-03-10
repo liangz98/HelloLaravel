@@ -32,10 +32,18 @@ Route::get('/help', 'StaticPagesController@help')->name('help');
 Route::get('/about', 'StaticPagesController@about')->name('about');
 Route::get('/contact', 'StaticPagesController@contact')->name('contact');
 
+// 用户
 Route::get('/signup', 'UsersController@addUser')->name('signup');
 Route::resource('user', 'UsersController');
 Route::get('signup/confirm/{token}', 'UsersController@confirmEmail')->name('confirm_email');
 
+// 登录 退出
 Route::get('login', 'SessionsController@create')->name('login');
 Route::post('login', 'SessionsController@store')->name('login');
 Route::delete('logout', 'SessionsController@destroy')->name('logout');
+
+// 重置密码
+Route::get('password/email', 'Auth\PasswordController@getEmail')->name('password.reset');   // 跳转忘记密码页
+Route::post('password/email', 'Auth\PasswordController@postEmail')->name('password.reset'); // 提交
+Route::get('password/reset/{token}', 'Auth\PasswordController@getReset')->name('password.edit');
+Route::post('password/reset', 'Auth\PasswordController@postReset')->name('password.update');
